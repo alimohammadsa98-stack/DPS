@@ -15,3 +15,17 @@ async function dbConnect() {
 }
 
 
+// proxy.js
+
+// import { NextResponse } from "next/server";
+
+// export function proxy(request) {
+
+//   // Redirect every request to /download/* to /Payment
+//   return NextResponse.redirect(new URL("/Payment", request.url));
+
+// }
+
+// export const config = {
+//   matcher: ["/download/:path*"],
+// };

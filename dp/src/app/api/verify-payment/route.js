@@ -34,6 +34,9 @@ console.log(typeof Payment.create);
     await Payment.create({
       orderId: body.razorpay_order_id,
       paymentId: body.razorpay_payment_id,
+      username:body.username,
+      email: body.email,
+
       amount: 399,
       status: "Success",
     });

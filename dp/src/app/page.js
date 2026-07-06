@@ -1,4 +1,4 @@
-import ProductCard from "./components/Card"; // If Card is a file/folder inside app/components
+import ProductCard from "./components/card"; // If Card is a file/folder inside app/components
 import Link from "next/link";
 
 export default function Home() {

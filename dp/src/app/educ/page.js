@@ -1,6 +1,41 @@
+"use client"
 import React from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+
 
 const Edu = () => {
+
+ 
+  const {data: session}= useSession()
+   const router= useRouter()
+
+   const handledownload = async () => {
+  if (!session) {
+    router.push("/login");
+    return;
+  }
+
+  const res = await fetch("/api/check-payment", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email: session.user.email,
+    }),
+  });
+
+  const data = await res.json();
+
+  if (data.paid) {
+    router.push("/download");
+  } else {
+    router.push("/payment");
+  }
+};
+
+
   const pdfs = [
     {
       title: "Science Previous Year Questions",
@@ -40,14 +75,22 @@ const Edu = () => {
                 <h2 className="text-2xl font-bold text-white">
                   {pdf.title}
                 </h2>
-
-                <a
-                  href={pdf.file}
+                <button onClick={handledownload}>
+                <a 
+                 
                   download
                   className="mt-4 md:mt-0 bg-white text-gray-800 font-semibold px-5 py-2 rounded-lg hover:scale-105 transition-all duration-300 shadow-lg"
                 >
                   📥 Download PDF
                 </a>
+                </button>
+
+                  {/* <button onClick={()=>{
+                      router.push(`/payment?file=${encodeURIComponent(pdf.file)}`)
+                  }}> */}
+
+                  {/* </button> */}
+
               </div>
 
               {/* PDF Viewer */}
@@ -67,3 +110,4 @@ const Edu = () => {
 };
 
 export default Edu;
+

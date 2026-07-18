@@ -1,7 +1,22 @@
+"use client"
+
 import ProductCard from "./components/Card"; // If Card is a file/folder inside app/components
 import Link from "next/link";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const { data: session } = useSession();
+const router = useRouter();
+
+const handleAccess = () => {
+  if (!session) {
+    router.push("/login?redirect=/payment");
+    return;
+  }
+
+  router.push("/payment");
+};
   return (
     <main className="max-w-7xl mx-auto px-6 py-10">
       {/* Heading */}
@@ -17,11 +32,18 @@ export default function Home() {
           digital assets for Students, Working Professionals and
           Content Creators.
         </p>
-        <Link href="/payment">
+        {/* <Link href="/payment">
           <button className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold px-8 py-3 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105">
             💳 Get Access
           </button>
-        </Link>
+        </Link> */}
+
+        <button
+  onClick={handleAccess}
+  className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold px-8 py-3 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105"
+>
+  💳 Get Access
+</button>
 
       </div>
 
@@ -45,7 +67,7 @@ export default function Home() {
           />
         </Link>
 
-        <Link href={"/edu"}>
+        <Link href={"/educ"}>
           <ProductCard
             im="/pyq.webp"
             productname="Previous Year Question Paper"

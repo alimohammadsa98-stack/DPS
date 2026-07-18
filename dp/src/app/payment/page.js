@@ -2,10 +2,46 @@
 
 import Script from "next/script";
 import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
+
 
 
 export default function UIpayment() {
   const { data: session } = useSession();
+  const [paid, setPaid] = useState(false);
+const [loading, setLoading] = useState(true);
+
+useEffect(() => {
+  const checkPayment = async () => {
+    if (!session?.user?.email) {
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const res = await fetch("/api/check-payment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: session.user.email,
+        }),
+      });
+
+      const data = await res.json();
+      console.log(data)
+
+      setPaid(data.paid);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  checkPayment();
+}, [session]);
 
   const pay = async () => {
 
@@ -52,6 +88,7 @@ export default function UIpayment() {
 
   if (data.success) {
     alert("Payment Successful");
+    window.location.href="/download"
   } else {
     alert("Payment Verification Failed");
   }
@@ -76,6 +113,33 @@ export default function UIpayment() {
 
     razor.open();
   };
+
+  if (loading) {
+  return <h2 className="text-center mt-10">Loading...</h2>;
+}
+
+if (paid) {
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="bg-green-100 p-8 rounded-xl text-center">
+        <h1 className="text-3xl font-bold text-green-700">
+          ✅ You already have a paid plan
+        </h1>
+
+        <p className="mt-3">
+          You can download all premium assets.
+        </p>
+
+        <button
+          onClick={() => (window.location.href = "/download")}
+          className="mt-5 bg-green-600 text-white px-6 py-3 rounded-lg"
+        >
+          Go to Downloads
+        </button>
+      </div>
+    </div>
+  );
+}
 
   return (
     <>

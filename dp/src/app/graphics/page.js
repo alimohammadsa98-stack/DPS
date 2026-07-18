@@ -1,4 +1,7 @@
+"use client"
 import React from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const assets = [
   {
@@ -26,6 +29,33 @@ const assets = [
 ];
 
 const Graphics = () => {
+   const {data: session}= useSession()
+     const router= useRouter()
+  
+     const handledownload = async () => {
+    if (!session) {
+      router.push("/login");
+      return;
+    }
+  
+    const res = await fetch("/api/check-payment", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: session.user.email,
+      }),
+    });
+  
+    const data = await res.json();
+  
+    if (data.paid) {
+      router.push("/download");
+    } else {
+      router.push("/payment");
+    }
+  };
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 py-10 px-5">
       <h1 className="text-4xl font-bold text-center text-gray-800 mb-10">
@@ -51,13 +81,16 @@ const Graphics = () => {
                 {asset.title}
               </h2>
 
-              <a
+              {/* <a
                 href={asset.file}
-                download
+                
                 className="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition duration-300"
               >
+                </a> */}
+                <button onClick={handledownload} className="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition duration-300">
                 📥 Download PNG
-              </a>
+                </button>
+              
             </div>
           </div>
         ))}

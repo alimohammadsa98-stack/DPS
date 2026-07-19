@@ -9,7 +9,7 @@ const razorpay = new Razorpay({
 export async function POST() {
   try {
     const options = {
-      amount: 399,
+      amount: 2900,
       currency: "INR",
     };
 

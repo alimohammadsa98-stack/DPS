@@ -37,7 +37,7 @@ console.log(typeof Payment.create);
       username:body.username,
       email: body.email,
 
-      amount: 399,
+      amount: 29,
       status: "Success",
     });
 

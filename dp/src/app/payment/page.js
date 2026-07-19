@@ -150,7 +150,7 @@ if (paid) {
           onClick={pay}
           className="bg-blue-600 text-white px-8 py-3 rounded-lg"
         >
-          Pay ₹399
+          Pay ₹29
         </button>
       </div> */}
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-100 via-blue-50 to-indigo-100 px-4">
@@ -179,7 +179,7 @@ if (paid) {
         </span>
 
         <span className="text-4xl font-bold text-green-600">
-          ₹399
+          ₹29
         </span>
       </div>
 
@@ -213,7 +213,7 @@ if (paid) {
         onClick={() => pay()}
         className="mt-8 w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white text-lg font-bold py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
       >
-        💳 Pay Securely ₹399
+        💳 Pay Securely ₹29
       </button>
 
       <div className="mt-6 text-center text-sm text-gray-500">

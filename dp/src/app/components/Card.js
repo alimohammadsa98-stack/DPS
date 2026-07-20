@@ -6,7 +6,7 @@ const ProductCard = (params) => {
       
       {/* Product Image */}
       <div className="relative w-full h-72">
-        <Image
+        <img
           src={params.im} // public folder me image rakho
           alt="Wireless Headphones"
           fill
